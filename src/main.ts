@@ -9,8 +9,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('PizzaFresh')
-    .setDescription('Aplicação para gestão das mesas de uma pizzaria')
+    .setTitle('Xbox-Live-Api')
+    .setDescription('Aplicação para plataforma online de jogos')
     .setVersion('1.0.0')
     .addTag('status')
     .addTag('game')
