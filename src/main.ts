@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Xbox-Live-Api')
-    .setDescription('Aplicação para plataforma online de jogos')
+    .setDescription('Application for online gaming platform')
     .setVersion('1.0.0')
     .addTag('status')
     .addTag('game')
