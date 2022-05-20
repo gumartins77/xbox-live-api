@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {IsNumber, IsPositive, IsString, IsUrl} from 'class-validator';
+import {IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl} from 'class-validator';
 
 export class CreateGameDto {
   @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     description: 'The title of the game',
     example: 'Halo Infinite'
@@ -15,6 +16,7 @@ export class CreateGameDto {
   })
   CoverImageUrl: string;
   @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     description: 'The description of the game',
     example: 'Halo Infinite is a first-person shooter video game developed by 343 Industries and published by Xbox Game Studios. It was released on December 8, 2021 for Microsoft Windows, Xbox One, and Xbox Series X/S.'

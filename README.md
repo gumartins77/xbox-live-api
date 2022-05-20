@@ -26,6 +26,12 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Repository cloning
+
+```bash
+$ git clone https://github.com/gumartins77/xbox-live-api.git
+```
+
 ## Installation
 
 ```bash
@@ -71,3 +77,8 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Xbox-Live-Api author contact
+
+- Author - [Gustavo Martins](gugumartin77@gmail.com)
+- Linkedin - [gustavomartins.linkedin](https://www.linkedin.com/in/gustavo-martins-681921229/)

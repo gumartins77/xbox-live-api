@@ -11,7 +11,7 @@ export class GameService {
   }
 
   create(createGameDto: CreateGameDto) {
-    const game: Game = { id: 'random id', ...createGameDto };
+    const game: Game = { id: this.games.length + 1, ...createGameDto };
 
     this.games.push(game);
 
