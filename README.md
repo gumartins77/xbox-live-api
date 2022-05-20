@@ -80,5 +80,5 @@ Nest is [MIT licensed](LICENSE).
 
 ## Xbox-Live-Api author contact
 
-- Author - [Gustavo Martins](gugumartin77@gmail.com)
+- Author - [Gustavo Martins](mailto:gugumartin77@gmail.com)
 - Linkedin - [gustavomartins.linkedin](https://www.linkedin.com/in/gustavo-martins-681921229/)
