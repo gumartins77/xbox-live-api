@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateGameDto } from './dto/create-game.dto'
+import { CreateGameDto } from './dto/create-game.dto';
 import { GameService } from './game.service';
 
 @ApiTags('game')
@@ -9,7 +9,7 @@ export class GameController {
   constructor(private gameService: GameService) {}
 
   @Get()
-  findAll(): object[] {
+  findAll(): object[] | object {
     return this.gameService.findAll();
   }
 

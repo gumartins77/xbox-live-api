@@ -6,7 +6,11 @@ import { Game } from './entities/game.entity';
 export class GameService {
   games: Game[] = [];
 
-  findAll() {
+  findAll(): object[] | object {
+    if (this.games.length === 0) {
+      return { message: 'No games found' };
+    }
+
     return this.games;
   }
 
