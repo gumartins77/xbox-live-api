@@ -6,7 +6,7 @@ import { Game } from './entities/game.entity';
 export class GameService {
   games: Game[] = [];
 
-  findAll(): object[] | object {
+  findAll(): Game[] | object {
     if (this.games.length === 0) {
       return { message: 'No games found' };
     }
@@ -14,7 +14,7 @@ export class GameService {
     return this.games;
   }
 
-  create(createGameDto: CreateGameDto) {
+  create(createGameDto: CreateGameDto): Game {
     const game: Game = { id: this.games.length + 1, ...createGameDto };
 
     this.games.push(game);
