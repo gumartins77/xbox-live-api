@@ -9,7 +9,7 @@ export class GameController {
   constructor(private gameService: GameService) {}
 
   @Get()
-  findAll() {
+  findAll(): object[] {
     return this.gameService.findAll();
   }
 
