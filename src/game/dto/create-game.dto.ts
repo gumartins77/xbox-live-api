@@ -37,7 +37,9 @@ export class CreateGameDto {
     example: 2021,
   })
   Year: number;
-  @IsNumber()
+  @IsNumber({
+    maxDecimalPlaces: 2,
+  })
   @IsPositive()
   @ApiProperty({
     description: 'The game IMBD Score (0 to 5)',
