@@ -61,6 +61,6 @@ export class GenderController {
     summary: 'Remove a gender by Id',
   })
   delete(@Param('id') id: string) {
-    this.genderService.delete(id);
+    return this.genderService.delete(id);
   }
 }
