@@ -20,6 +20,14 @@ import { GameService } from './game.service';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
+  @Post()
+  @ApiOperation({
+    summary: 'Create a new game',
+  })
+  create(@Body() dto: CreateGameDto): Promise<Game> {
+    return this.gameService.create(dto);
+  }
+
   @Get()
   @ApiOperation({
     summary: 'List all games',
@@ -34,14 +42,6 @@ export class GameController {
   })
   findOne(@Param('id') id: string): Promise<Game> {
     return this.gameService.findOne(id);
-  }
-
-  @Post()
-  @ApiOperation({
-    summary: 'Create a new game',
-  })
-  create(@Body() dto: CreateGameDto): Promise<Game> {
-    return this.gameService.create(dto);
   }
 
   @Patch(':id')
