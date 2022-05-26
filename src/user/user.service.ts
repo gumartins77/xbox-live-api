@@ -53,6 +53,10 @@ export class UserService {
       CPF: await bcrypt.hash(dto.CPF, 10),
     };
 
+    if (!data.isAdmin) {
+      data.isAdmin = false;
+    }
+
     return this.prisma.user
       .create({ data, select: this.userSelect })
       .catch(this.handleError);
@@ -89,6 +93,10 @@ export class UserService {
   handleError(error: Error): undefined {
     const errorLines = error.message?.split('\n');
     const lastErrorLine = errorLines[errorLines.length - 1]?.trim();
+
+    if (!lastErrorLine) {
+      console.error(error);
+    }
 
     throw new UnprocessableEntityException(
       lastErrorLine || 'An error occurred while performing the operation!',
