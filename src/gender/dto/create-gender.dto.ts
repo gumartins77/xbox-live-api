@@ -6,7 +6,7 @@ export class CreateGenderDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'The name of the gender',
-    example: 'Action',
+    example: 'FPS',
   })
   Name: string;
 }
