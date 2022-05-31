@@ -9,22 +9,22 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { GenderService } from './gender.service';
-import { CreateGenderDto } from './dto/create-gender.dto';
-import { UpdateGenderDto } from './dto/update-gender.dto';
+import { GenreService } from './genre.service';
+import { CreateGenreDto } from './dto/create-genre.dto';
+import { UpdateGenreDto } from './dto/update-genre.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Gender } from './entities/gender.entity';
+import { Genre } from './entities/genre.entity';
 
-@ApiTags('gender')
-@Controller('gender')
-export class GenderController {
-  constructor(private readonly genderService: GenderService) {}
+@ApiTags('genre')
+@Controller('genre')
+export class GenreController {
+  constructor(private readonly genderService: GenreService) {}
 
   @Post()
   @ApiOperation({
-    summary: 'Create a new gender',
+    summary: 'Create a new genre',
   })
-  create(@Body() dto: CreateGenderDto): Promise<Gender> {
+  create(@Body() dto: CreateGenreDto): Promise<Genre> {
     return this.genderService.create(dto);
   }
 
@@ -32,33 +32,33 @@ export class GenderController {
   @ApiOperation({
     summary: 'List all genders',
   })
-  findAll(): Promise<Gender[]> {
+  findAll(): Promise<Genre[]> {
     return this.genderService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'View a gender by Id',
+    summary: 'View a genre by Id',
   })
-  findOne(@Param('id') id: string): Promise<Gender> {
+  findOne(@Param('id') id: string): Promise<Genre> {
     return this.genderService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Edit a gender by Id',
+    summary: 'Edit a genre by Id',
   })
   update(
     @Param('id') id: string,
-    @Body() dto: UpdateGenderDto,
-  ): Promise<Gender> {
+    @Body() dto: UpdateGenreDto,
+  ): Promise<Genre> {
     return this.genderService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remove a gender by Id',
+    summary: 'Remove a genre by Id',
   })
   delete(@Param('id') id: string) {
     return this.genderService.delete(id);
