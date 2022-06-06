@@ -3,7 +3,9 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { handleError } from 'utils/handle-error.util';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Game } from './entities/game.entity';
@@ -12,11 +14,17 @@ import { Game } from './entities/game.entity';
 export class GameService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): Promise<Game[]> {
-    return this.prisma.game.findMany();
+  findAll() {
+    return this.prisma.game.findMany({
+      select: {
+        id: true,
+        Title: true,
+        CoverImageUrl: true,
+      }
+    });
   }
 
-  async findById(id: string): Promise<Game> {
+  async findById(id: string) {
     const record = await this.prisma.game.findUnique({ where: { id } });
 
     if (!record) {
@@ -26,41 +34,72 @@ export class GameService {
     return record;
   }
 
-  findOne(id: string): Promise<Game> {
+  findOne(id: string) {
     return this.findById(id);
   }
 
-  create(dto: CreateGameDto): Promise<Game> {
-    const data: Game = { ...dto };
+  create(dto: CreateGameDto) {
+    const data: Prisma.GameCreateInput = {
+      Title: dto.Title,
+      CoverImageUrl: dto.CoverImageUrl,
+      Description: dto.Description,
+      Year: dto.Year,
+      ImdbScore: dto.ImdbScore,
+      TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
+      GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
+      genre: {
+        connect: {
+          Name: dto.genreId,
+        },
+      },
+    };
 
-    return this.prisma.game.create({ data }).catch(this.handleError);
+    return this.prisma.game
+      .create({
+        data,
+        select: {
+          id: true,
+          Title: true,
+          CoverImageUrl: true,
+          genre: {
+            select: {
+              Name: true,
+            },
+          },
+        },
+      })
+      .catch(handleError);
   }
 
   async update(id: string, dto: UpdateGameDto) {
     await this.findById(id);
 
-    const data: Partial<Game> = { ...dto };
+    const data: Prisma.GameUpdateInput = {
+      Title: dto.Title,
+      CoverImageUrl: dto.CoverImageUrl,
+      Description: dto.Description,
+      Year: dto.Year,
+      ImdbScore: dto.ImdbScore,
+      TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
+      GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
+      genre: {
+        connect: {
+          Name: dto.genreId,
+        },
+      },
+    };
 
     return this.prisma.game
       .update({
         where: { id },
         data,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async delete(id: string) {
     await this.findById(id);
 
     await this.prisma.game.delete({ where: { id } });
-  }
-
-  handleError(error: Error): undefined {
-    const errorLines = error.message?.split('\n');
-    const lastErrorLine = errorLines[errorLines.length - 1]?.trim();
-
-    throw new UnprocessableEntityException(
-      lastErrorLine || 'An error occurred while performing the operation!',
-    );
   }
 }

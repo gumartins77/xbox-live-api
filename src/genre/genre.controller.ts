@@ -38,10 +38,10 @@ export class GenreController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'View a genre by Id',
+    summary: 'List all games by related genre',
   })
-  findOne(@Param('id') id: string): Promise<Genre> {
-    return this.genderService.findOne(id);
+  findAllGamesRelation(@Param('id') id: string) {
+    return this.genderService.findAllGamesRelation(id);
   }
 
   @Patch(':id')

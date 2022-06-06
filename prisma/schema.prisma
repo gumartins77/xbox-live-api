@@ -8,12 +8,14 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       String   @id @default(uuid())
   Name     String
-  Email    String  @unique
+  Email    String   @unique
   Password String
-  CPF      String  @unique
-  isAdmin  Boolean
+  CPF      String   @unique
+  isAdmin  Boolean?
+
+  profiles Profile[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -25,6 +27,11 @@ model Profile {
   id       String @id @default(uuid())
   Title    String @unique
   ImageURL String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  favorites Favorite[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -42,6 +49,11 @@ model Game {
   TrailerYouTubeUrl  String @unique
   GameplayYouTubeUrl String @unique
 
+  genre   Genre  @relation(fields: [genreId], references: [id])
+  genreId String @map("genre_id")
+
+  favorites Favorite[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -52,8 +64,25 @@ model Genre {
   id   String @id @default(uuid())
   Name String @unique
 
+  games Game[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("genre")
+}
+
+model Favorite {
+  id String @id @default(uuid())
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String @map("game_id")
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId String  @map("profile_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("favorite")
 }

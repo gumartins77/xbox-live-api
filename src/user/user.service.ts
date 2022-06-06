@@ -1,13 +1,13 @@
 import {
   Injectable,
-  NotFoundException,
-  UnprocessableEntityException,
+  NotFoundException
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { handleError } from 'utils/handle-error.util';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -48,8 +48,7 @@ export class UserService {
   async create(dto: CreateUserDto): Promise<User> {
     const data: User = {
       ...dto,
-      Password: await bcrypt.hash(dto.Password, 10),
-      CPF: await bcrypt.hash(dto.CPF, 10),
+      Password: await bcrypt.hash(dto.Password, 10)
     };
 
     if (!data.isAdmin) {
@@ -58,7 +57,7 @@ export class UserService {
 
     return this.prisma.user
       .create({ data, select: this.userSelect })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async update(id: string, dto: UpdateUserDto) {
@@ -70,31 +69,18 @@ export class UserService {
       data.Password = await bcrypt.hash(data.Password, 10);
     }
 
-    if (data.CPF) {
-      data.CPF = await bcrypt.hash(data.CPF, 10);
-    }
-
     return this.prisma.user
       .update({
         where: { id },
         data,
         select: this.userSelect,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async delete(id: string) {
     await this.findById(id);
 
     await this.prisma.user.delete({ where: { id } });
-  }
-
-  handleError(error: Error): undefined {
-    const errorLines = error.message?.split('\n');
-    const lastErrorLine = errorLines[errorLines.length - 1]?.trim();
-
-    throw new UnprocessableEntityException(
-      lastErrorLine || 'An error occurred while performing the operation!',
-    );
   }
 }

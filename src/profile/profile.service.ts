@@ -1,9 +1,7 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { handleError } from 'utils/handle-error.util';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile } from './entities/profile.entity';
@@ -12,11 +10,11 @@ import { Profile } from './entities/profile.entity';
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): Promise<Profile[]> {
+  findAll() {
     return this.prisma.profile.findMany();
   }
 
-  async findById(id: string): Promise<Profile> {
+  async findById(id: string) {
     const record = await this.prisma.profile.findUnique({ where: { id } });
 
     if (!record) {
@@ -26,41 +24,54 @@ export class ProfileService {
     return record;
   }
 
-  findOne(id: string): Promise<Profile> {
+  findOne(id: string) {
     return this.findById(id);
   }
 
-  create(dto: CreateProfileDto): Promise<Profile> {
-    const data: Profile = { ...dto };
+  async create(dto: CreateProfileDto): Promise<Profile> {
+    const data: Prisma.ProfileCreateInput = {
+      Title: dto.Title,
+      ImageURL: dto.ImageURL,
+      user: {
+        connect: {
+          id: dto.userId,
+        },
+      },
+    };
 
-    return this.prisma.profile.create({ data }).catch(this.handleError);
+    return await this.prisma.profile
+      .create({
+        data,
+        select: {
+          id: true,
+          Title: true,
+          ImageURL: true,
+          user: {
+            select: {
+              Name: true,
+            },
+          },
+        },
+      })
+      .catch(handleError);
   }
 
   async update(id: string, dto: UpdateProfileDto) {
     await this.findById(id);
 
-    const data: Partial<Profile> = { ...dto };
+    const data: Prisma.ProfileUpdateInput = { ...dto };
 
     return this.prisma.profile
       .update({
         where: { id },
         data,
       })
-      .catch(this.handleError);
+      .catch(handleError);
   }
 
   async delete(id: string) {
     await this.findById(id);
 
     await this.prisma.profile.delete({ where: { id } });
-  }
-
-  handleError(error: Error): undefined {
-    const errorLines = error.message?.split('\n');
-    const lastErrorLine = errorLines[errorLines.length - 1]?.trim();
-
-    throw new UnprocessableEntityException(
-      lastErrorLine || 'An error occurred while performing the operation!',
-    );
   }
 }

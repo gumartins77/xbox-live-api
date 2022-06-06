@@ -58,4 +58,11 @@ export class CreateGameDto {
     example: 'https://youtu.be/HZtc5-syeAk',
   })
   GameplayYouTubeUrl: string;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The genre of the game',
+    example: 'FPS',
+  })
+  genreId: string;
 }

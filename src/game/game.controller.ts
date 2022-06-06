@@ -24,7 +24,7 @@ export class GameController {
   @ApiOperation({
     summary: 'Create a new game',
   })
-  create(@Body() dto: CreateGameDto): Promise<Game> {
+  create(@Body() dto: CreateGameDto) {
     return this.gameService.create(dto);
   }
 
@@ -32,7 +32,7 @@ export class GameController {
   @ApiOperation({
     summary: 'List all games',
   })
-  findAll(): Promise<Game[]> {
+  findAll() {
     return this.gameService.findAll();
   }
 
@@ -40,7 +40,7 @@ export class GameController {
   @ApiOperation({
     summary: 'View a game by Id',
   })
-  findOne(@Param('id') id: string): Promise<Game> {
+  findOne(@Param('id') id: string) {
     return this.gameService.findOne(id);
   }
 

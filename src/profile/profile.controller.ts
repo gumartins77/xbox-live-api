@@ -32,7 +32,7 @@ export class ProfileController {
   @ApiOperation({
     summary: 'List all profiles',
   })
-  findAll(): Promise<Profile[]> {
+  findAll() {
     return this.profileService.findAll();
   }
 
@@ -40,7 +40,7 @@ export class ProfileController {
   @ApiOperation({
     summary: 'View a profile by Id',
   })
-  findOne(@Param('id') id: string): Promise<Profile> {
+  findOne(@Param('id') id: string) {
     return this.profileService.findOne(id);
   }
 
@@ -48,10 +48,7 @@ export class ProfileController {
   @ApiOperation({
     summary: 'Edit a profile by Id',
   })
-  update(
-    @Param('id') id: string,
-    @Body() dto: UpdateProfileDto,
-  ): Promise<Profile> {
+  update(@Param('id') id: string, @Body() dto: UpdateProfileDto) {
     return this.profileService.update(id, dto);
   }
 
