@@ -8,11 +8,12 @@ import { CreateFavoriteDto } from './dto/create-favorite.dto';
 export class FavoriteService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(id: string) {
-    return this.prisma.favorite.findMany({
+  async findAll(id: string) {
+    const allGames = await this.prisma.favorite.findMany({
       where: { profileId: id },
       select: {
         id: true,
+        isFavorite: true,
         game: {
           select: {
             Title: true,
@@ -21,6 +22,20 @@ export class FavoriteService {
         },
       },
     });
+
+    const allGenders = await this.prisma.genre.findMany({
+      select: {
+        Name: true,
+        games: {
+          select: {
+            Title: true,
+            CoverImageUrl: true
+          }
+        }
+      }
+    })
+
+    return ({allGames, allGenders});
   }
 
   async findById(id: string) {
@@ -33,7 +48,7 @@ export class FavoriteService {
     return record;
   }
 
-  create(dto: CreateFavoriteDto) {
+  async create(dto: CreateFavoriteDto) {
     const data: Prisma.FavoriteCreateInput = {
       game: {
         connect: {
@@ -45,27 +60,32 @@ export class FavoriteService {
           id: dto.profileId,
         },
       },
+      isFavorite: dto.isFavorite,
     };
 
-    return this.prisma.favorite
-      .create({
-        data,
-        select: {
-          id: true,
-          game: {
-            select: {
-              Title: true,
-              CoverImageUrl: true,
+    try {
+      return await this.prisma.favorite
+        .create({
+          data,
+          select: {
+            id: true,
+            game: {
+              select: {
+                Title: true,
+                CoverImageUrl: true,
+              },
             },
-          },
-          profile: {
-            select: {
-              Title: true,
+            profile: {
+              select: {
+                Title: true,
+              },
             },
+            isFavorite: true,
           },
-        },
-      })
-      .catch(handleError);
+        });
+    } catch (error) {
+      return handleError(error);
+    }
   }
 
   async delete(id: string) {

@@ -81,6 +81,8 @@ model Favorite {
   profile   Profile @relation(fields: [profileId], references: [id])
   profileId String  @map("profile_id")
 
+  isFavorite Boolean @map("is_favorite")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

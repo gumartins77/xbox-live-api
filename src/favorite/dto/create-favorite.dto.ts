@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID } from 'class-validator';
+import { IsBoolean, IsUUID } from 'class-validator';
 
 export class CreateFavoriteDto {
   @IsUUID()
@@ -15,4 +15,11 @@ export class CreateFavoriteDto {
     example: '9e9e886f-ebb3-44f6-a26b-1966e080bfef',
   })
   gameId: string;
+
+  @IsBoolean()
+  @ApiProperty({
+    description: 'The action a favorite game',
+    example: true,
+  })
+  isFavorite: boolean;
 }
