@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { handleError } from 'utils/handle-error.util';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
+import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 
 @Injectable()
 export class FavoriteService {
@@ -86,6 +87,21 @@ export class FavoriteService {
     } catch (error) {
       return handleError(error);
     }
+  }
+
+  async update(id: string, dto: UpdateFavoriteDto) {
+    await this.findById(id);
+
+    const data: Prisma.FavoriteUpdateInput = {
+      isFavorite: dto.isFavorite,
+    };
+
+    return this.prisma.favorite
+      .update({
+        where: { id },
+        data,
+      })
+      .catch(handleError);
   }
 
   async delete(id: string) {

@@ -6,10 +6,12 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
+import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { FavoriteService } from './favorite.service';
 
 @ApiTags('favorite')
@@ -31,6 +33,14 @@ export class FavoriteController {
   })
   findAll(@Param('id') id: string) {
     return this.favoriteService.findAll(id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Edit a game by Id',
+  })
+  update(@Param('id') id: string, @Body() dto: UpdateFavoriteDto) {
+    return this.favoriteService.update(id, dto);
   }
 
   @Delete(':id')

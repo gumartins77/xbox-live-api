@@ -18,7 +18,7 @@ export class CreateFavoriteDto {
 
   @IsBoolean()
   @ApiProperty({
-    description: 'The action a favorite game',
+    description: 'The action of favoriteing a game',
     example: true,
   })
   isFavorite: boolean;
