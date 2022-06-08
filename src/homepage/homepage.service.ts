@@ -11,16 +11,14 @@ export class HomepageService {
 
   async findAll(id: string) {
     const allGames = await this.prisma.homepage.findMany({
+      orderBy: {
+        isFavorite: "desc",
+      },
       where: { profileId: id },
       select: {
         id: true,
         isFavorite: true,
-        game: {
-          select: {
-            Title: true,
-            CoverImageUrl: true,
-          },
-        },
+        game: true
       },
     });
 
