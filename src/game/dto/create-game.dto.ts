@@ -5,6 +5,7 @@ import {
   IsPositive,
   IsString,
   IsUrl,
+  IsUUID,
 } from 'class-validator';
 
 export class CreateGameDto {
@@ -59,10 +60,10 @@ export class CreateGameDto {
   })
   GameplayYouTubeUrl: string;
 
-  @IsNotEmpty()
+  @IsUUID()
   @ApiProperty({
     description: 'The genre of the game',
-    example: 'FPS',
+    example: 'dcaff4f1-f984-49c2-a7ec-ccbe8d9d49a7',
   })
   genreId: string;
 }

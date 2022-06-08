@@ -38,7 +38,7 @@ export class GameService {
     return this.findById(id);
   }
 
-  create(dto: CreateGameDto) {
+  async create(dto: CreateGameDto) {
     const data: Prisma.GameCreateInput = {
       Title: dto.Title,
       CoverImageUrl: dto.CoverImageUrl,
@@ -49,26 +49,29 @@ export class GameService {
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
       genre: {
         connect: {
-          Name: dto.genreId,
+          id: dto.genreId,
         },
       },
     };
 
-    return this.prisma.game
-      .create({
-        data,
-        select: {
-          id: true,
-          Title: true,
-          CoverImageUrl: true,
-          genre: {
-            select: {
-              Name: true,
+    try {
+      return await this.prisma.game
+        .create({
+          data,
+          select: {
+            id: true,
+            Title: true,
+            CoverImageUrl: true,
+            genre: {
+              select: {
+                Name: true,
+              },
             },
           },
-        },
-      })
-      .catch(handleError);
+        });
+    } catch (error) {
+      return handleError(error);
+    }
   }
 
   async update(id: string, dto: UpdateGameDto) {
@@ -84,7 +87,7 @@ export class GameService {
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
       genre: {
         connect: {
-          Name: dto.genreId,
+          id: dto.genreId,
         },
       },
     };
