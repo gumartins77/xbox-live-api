@@ -10,20 +10,20 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
-import { FavoriteService } from './favorite.service';
+import { CreateHomepageDto } from './dto/create-homepage.dto';
+import { UpdateHomepageDto } from './dto/update-homepage.dto';
+import { HomepageService } from './homepage.service';
 
-@ApiTags('favorite')
-@Controller('favorite')
-export class FavoriteController {
-  constructor(private readonly favoriteService: FavoriteService) {}
+@ApiTags('homepage')
+@Controller('homepage')
+export class HomepageController {
+  constructor(private readonly favoriteService: HomepageService) {}
 
   @Post()
   @ApiOperation({
-    summary: 'Create a new favorite',
+    summary: 'Create a new homepage',
   })
-  create(@Body() dto: CreateFavoriteDto) {
+  create(@Body() dto: CreateHomepageDto) {
     return this.favoriteService.create(dto);
   }
 
@@ -37,16 +37,16 @@ export class FavoriteController {
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Edit a game by Id',
+    summary: 'Favorite or unfavorite a game from the profile',
   })
-  update(@Param('id') id: string, @Body() dto: UpdateFavoriteDto) {
+  update(@Param('id') id: string, @Body() dto: UpdateHomepageDto) {
     return this.favoriteService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary: 'Remove a favorite by Id',
+    summary: 'Remove a homepage by Id',
   })
   delete(@Param('id') id: string) {
     return this.favoriteService.delete(id);

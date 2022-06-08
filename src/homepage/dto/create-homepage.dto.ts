@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsUUID } from 'class-validator';
 
-export class CreateFavoriteDto {
+export class CreateHomepageDto {
   @IsUUID()
   @ApiProperty({
     description: 'The profile id',

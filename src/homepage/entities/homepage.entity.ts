@@ -1,4 +1,4 @@
-export class Favorite {
+export class Homepage {
   id?: string;
   profileId: string;
   gameId: string;

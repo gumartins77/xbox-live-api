@@ -31,7 +31,7 @@ model Profile {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
-  favorites Favorite[]
+  homepages Homepage[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -52,7 +52,7 @@ model Game {
   genre   Genre  @relation(fields: [genreId], references: [id])
   genreId String @map("genre_id")
 
-  favorites Favorite[]
+  homepages Homepage[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -72,7 +72,7 @@ model Genre {
   @@map("genre")
 }
 
-model Favorite {
+model Homepage {
   id String @id @default(uuid())
 
   game   Game   @relation(fields: [gameId], references: [id])

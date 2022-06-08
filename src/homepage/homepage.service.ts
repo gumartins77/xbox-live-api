@@ -2,15 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { handleError } from 'utils/handle-error.util';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { CreateHomepageDto } from './dto/create-homepage.dto';
+import { UpdateHomepageDto } from './dto/update-homepage.dto';
 
 @Injectable()
-export class FavoriteService {
+export class HomepageService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(id: string) {
-    const allGames = await this.prisma.favorite.findMany({
+    const allGames = await this.prisma.homepage.findMany({
       where: { profileId: id },
       select: {
         id: true,
@@ -40,7 +40,7 @@ export class FavoriteService {
   }
 
   async findById(id: string) {
-    const record = await this.prisma.favorite.findUnique({ where: { id } });
+    const record = await this.prisma.homepage.findUnique({ where: { id } });
 
     if (!record) {
       throw new NotFoundException(`Record with Id '${id}' not found!`);
@@ -49,8 +49,8 @@ export class FavoriteService {
     return record;
   }
 
-  async create(dto: CreateFavoriteDto) {
-    const data: Prisma.FavoriteCreateInput = {
+  async create(dto: CreateHomepageDto) {
+    const data: Prisma.HomepageCreateInput = {
       game: {
         connect: {
           id: dto.gameId,
@@ -65,7 +65,7 @@ export class FavoriteService {
     };
 
     try {
-      return await this.prisma.favorite
+      return await this.prisma.homepage
         .create({
           data,
           select: {
@@ -89,14 +89,14 @@ export class FavoriteService {
     }
   }
 
-  async update(id: string, dto: UpdateFavoriteDto) {
+  async update(id: string, dto: UpdateHomepageDto) {
     await this.findById(id);
 
-    const data: Prisma.FavoriteUpdateInput = {
+    const data: Prisma.HomepageUpdateInput = {
       isFavorite: dto.isFavorite,
     };
 
-    return this.prisma.favorite
+    return this.prisma.homepage
       .update({
         where: { id },
         data,
@@ -107,6 +107,6 @@ export class FavoriteService {
   async delete(id: string) {
     await this.findById(id);
 
-    await this.prisma.favorite.delete({ where: { id } });
+    await this.prisma.homepage.delete({ where: { id } });
   }
 }

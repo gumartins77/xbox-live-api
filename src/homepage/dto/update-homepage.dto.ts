@@ -1,8 +1,7 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsOptional } from 'class-validator';
-import { CreateFavoriteDto } from './create-favorite.dto';
 
-export class UpdateFavoriteDto {
+export class UpdateHomepageDto {
   @IsOptional()
   @IsBoolean()
   @ApiProperty({
