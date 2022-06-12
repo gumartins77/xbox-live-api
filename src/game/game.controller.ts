@@ -8,14 +8,19 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/user/entities/user.entity';
+import { UserValid } from 'src/user/isAdmin.decorator';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
-import { Game } from './entities/game.entity';
 import { GameService } from './game.service';
 
 @ApiTags('game')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
@@ -24,7 +29,7 @@ export class GameController {
   @ApiOperation({
     summary: 'Create a new game',
   })
-  create(@Body() dto: CreateGameDto) {
+  create(@UserValid() user: User, @Body() dto: CreateGameDto) {
     return this.gameService.create(dto);
   }
 
@@ -32,7 +37,7 @@ export class GameController {
   @ApiOperation({
     summary: 'List all games',
   })
-  findAll() {
+  findAll(@UserValid() user: User) {
     return this.gameService.findAll();
   }
 
@@ -40,7 +45,7 @@ export class GameController {
   @ApiOperation({
     summary: 'View a game by Id',
   })
-  findOne(@Param('id') id: string) {
+  findOne(@UserValid() user: User, @Param('id') id: string) {
     return this.gameService.findOne(id);
   }
 
@@ -48,7 +53,7 @@ export class GameController {
   @ApiOperation({
     summary: 'Edit a game by Id',
   })
-  update(@Param('id') id: string, @Body() dto: UpdateGameDto) {
+  update(@UserValid() user: User, @Param('id') id: string, @Body() dto: UpdateGameDto) {
     return this.gameService.update(id, dto);
   }
 
@@ -57,7 +62,7 @@ export class GameController {
   @ApiOperation({
     summary: 'Remove a game by Id',
   })
-  delete(@Param('id') id: string) {
+  delete(@UserValid() user: User, @Param('id') id: string) {
     return this.gameService.delete(id);
   }
 }

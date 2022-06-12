@@ -28,8 +28,8 @@ model Profile {
   Title    String @unique
   ImageURL String
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String? @map("user_id")
 
   homepages Homepage[]
 
@@ -49,8 +49,8 @@ model Game {
   TrailerYouTubeUrl  String @unique
   GameplayYouTubeUrl String @unique
 
-  genre   Genre  @relation(fields: [genreId], references: [id])
-  genreId String @map("genre_id")
+  genre   Genre?  @relation(fields: [genreId], references: [id], onDelete: SetNull)
+  genreId String? @map("genre_id")
 
   homepages Homepage[]
 
@@ -75,16 +75,17 @@ model Genre {
 model Homepage {
   id String @id @default(uuid())
 
-  game   Game   @relation(fields: [gameId], references: [id])
-  gameId String @map("game_id")
+  game   Game?   @relation(fields: [gameId], references: [id], onDelete: SetNull)
+  gameId String? @map("game_id")
 
-  profile   Profile @relation(fields: [profileId], references: [id])
-  profileId String  @map("profile_id")
+  profile   Profile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
+  profileId String?  @map("profile_id")
 
   isFavorite Boolean @map("is_favorite")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("favorite")
+  @@unique([profileId ,gameId])
+  @@map("homepage")
 }

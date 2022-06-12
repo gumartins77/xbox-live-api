@@ -8,14 +8,20 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { GenreService } from './genre.service';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Genre } from './entities/genre.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { UserValid } from 'src/user/isAdmin.decorator';
+import { User } from 'src/user/entities/user.entity';
 
 @ApiTags('genre')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('genre')
 export class GenreController {
   constructor(private readonly genderService: GenreService) {}
@@ -24,7 +30,7 @@ export class GenreController {
   @ApiOperation({
     summary: 'Create a new genre',
   })
-  create(@Body() dto: CreateGenreDto): Promise<Genre> {
+  create(@UserValid() user: User, @Body() dto: CreateGenreDto): Promise<Genre> {
     return this.genderService.create(dto);
   }
 
@@ -32,7 +38,7 @@ export class GenreController {
   @ApiOperation({
     summary: 'List all genders',
   })
-  findAll(): Promise<Genre[]> {
+  findAll(@UserValid() user: User): Promise<Genre[]> {
     return this.genderService.findAll();
   }
 
@@ -40,7 +46,7 @@ export class GenreController {
   @ApiOperation({
     summary: 'List all games by related genre',
   })
-  findAllGamesRelation(@Param('id') id: string) {
+  findAllGamesRelation(@UserValid() user: User, @Param('id') id: string) {
     return this.genderService.findAllGamesRelation(id);
   }
 
@@ -49,6 +55,7 @@ export class GenreController {
     summary: 'Edit a genre by Id',
   })
   update(
+    @UserValid() user: User,
     @Param('id') id: string,
     @Body() dto: UpdateGenreDto,
   ): Promise<Genre> {
@@ -60,7 +67,7 @@ export class GenreController {
   @ApiOperation({
     summary: 'Remove a genre by Id',
   })
-  delete(@Param('id') id: string) {
+  delete(@UserValid() user: User, @Param('id') id: string) {
     return this.genderService.delete(id);
   }
 }

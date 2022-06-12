@@ -8,14 +8,20 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Profile } from './entities/profile.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
+import { User } from 'src/user/entities/user.entity';
 
 @ApiTags('profile')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
@@ -24,24 +30,16 @@ export class ProfileController {
   @ApiOperation({
     summary: 'Create a new profile',
   })
-  create(@Body() dto: CreateProfileDto): Promise<Profile> {
-    return this.profileService.create(dto);
-  }
-
-  @Get()
-  @ApiOperation({
-    summary: 'List all profiles',
-  })
-  findAll() {
-    return this.profileService.findAll();
+  create(@LoggedUser() user: User, @Body() dto: CreateProfileDto): Promise<Profile> {
+    return this.profileService.create(user.id, dto);
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'View a profile by Id',
+    summary: 'List all profiles by user',
   })
-  findOne(@Param('id') id: string) {
-    return this.profileService.findOne(id);
+  findAll(@Param('id') id: string) {
+    return this.profileService.findAll(id);
   }
 
   @Patch(':id')

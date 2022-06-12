@@ -5,14 +5,14 @@ export class CreateHomepageDto {
   @IsUUID()
   @ApiProperty({
     description: 'The profile id',
-    example: 'af4ed5b6-109c-4496-adc1-aaaede698d93',
+    example: '29d2d681-70fe-40f3-bcdd-1d8a07c98fcc',
   })
   profileId: string;
 
   @IsUUID()
   @ApiProperty({
     description: 'The game id',
-    example: '9e9e886f-ebb3-44f6-a26b-1966e080bfef',
+    example: 'e8de0513-1f8c-46bd-9c72-8314211a6832',
   })
   gameId: string;
 

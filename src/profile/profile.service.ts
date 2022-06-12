@@ -10,8 +10,15 @@ import { Profile } from './entities/profile.entity';
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.profile.findMany();
+  async findAll(id: string) {
+    return this.prisma.profile.findMany({
+      where: { userId: id },
+      select: {
+        id: true,
+        Title: true,
+        ImageURL: true
+      }
+    });
   }
 
   async findById(id: string) {
@@ -24,17 +31,13 @@ export class ProfileService {
     return record;
   }
 
-  findOne(id: string) {
-    return this.findById(id);
-  }
-
-  async create(dto: CreateProfileDto): Promise<Profile> {
+  async create(userId: string, dto: CreateProfileDto): Promise<Profile> {
     const data: Prisma.ProfileCreateInput = {
       Title: dto.Title,
       ImageURL: dto.ImageURL,
       user: {
         connect: {
-          id: dto.userId,
+          id: userId,
         },
       },
     };
