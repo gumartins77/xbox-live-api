@@ -47,7 +47,7 @@ export class GameService {
       ImdbScore: dto.ImdbScore,
       TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
-      genre: {
+      genres: {
         connect: {
           id: dto.genreId,
         },
@@ -62,7 +62,7 @@ export class GameService {
             id: true,
             Title: true,
             CoverImageUrl: true,
-            genre: {
+            genres: {
               select: {
                 Name: true,
               },
@@ -85,7 +85,7 @@ export class GameService {
       ImdbScore: dto.ImdbScore,
       TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
-      genre: {
+      genres: {
         connect: {
           id: dto.genreId,
         },

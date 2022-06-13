@@ -49,8 +49,7 @@ model Game {
   TrailerYouTubeUrl  String @unique
   GameplayYouTubeUrl String @unique
 
-  genre   Genre?  @relation(fields: [genreId], references: [id], onDelete: SetNull)
-  genreId String? @map("genre_id")
+  genres Genre[]
 
   homepages Homepage[]
 
@@ -86,6 +85,6 @@ model Homepage {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([profileId ,gameId])
+  @@unique([profileId, gameId])
   @@map("homepage")
 }

@@ -11,7 +11,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 4.25,
     TrailerYouTubeUrl: 'https://youtu.be/PyMlV5_HRWk',
     GameplayYouTubeUrl: 'https://youtu.be/HZtc5-syeAk',
-    genre: {
+    genres: {
       connect: {
         id: '3a3a4738-05fb-43b1-82bc-832e1423933d',
       },
@@ -27,7 +27,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 2.5,
     TrailerYouTubeUrl: 'https://youtu.be/vLj-27T-SEQ',
     GameplayYouTubeUrl: 'https://youtu.be/XlrJ_urwp-Y',
-    genre: {
+    genres: {
       connect: {
         id: '2e25cd4e-0bba-440e-a896-08ee9e898167',
       },
@@ -42,7 +42,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 4.35,
     TrailerYouTubeUrl: 'https://youtu.be/FYH9n37B7Yw',
     GameplayYouTubeUrl: 'https://youtu.be/1XB-fTP0iT0',
-    genre: {
+    genres: {
       connect: {
         id: '1050f467-e75e-42b9-8c7c-72263ad73add',
       },
@@ -58,7 +58,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 4.35,
     TrailerYouTubeUrl: 'https://youtu.be/50C9vDayxkE',
     GameplayYouTubeUrl: 'https://youtu.be/W8vdFS_fBhw',
-    genre: {
+    genres: {
       connect: {
         id: '5d69b8ec-7061-477b-80be-82b7f1736ae9',
       },
@@ -74,7 +74,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 4.05,
     TrailerYouTubeUrl: 'https://youtu.be/TUbgBVTD7VI',
     GameplayYouTubeUrl: 'https://youtu.be/FApX-M_DrDc',
-    genre: {
+    genres: {
       connect: {
         id: '5543c313-96ea-42b5-a81c-5f9304288576',
       },
@@ -90,7 +90,7 @@ export const games: Prisma.GameCreateInput[] = [
     ImdbScore: 3,
     TrailerYouTubeUrl: 'https://youtu.be/OQ1CwPhE8KQ',
     GameplayYouTubeUrl: 'https://youtu.be/hsmYOYAEqd4',
-    genre: {
+    genres: {
       connect: {
         id: '3a3a4738-05fb-43b1-82bc-832e1423933d',
       },
