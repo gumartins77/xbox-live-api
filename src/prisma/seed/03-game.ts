@@ -76,7 +76,7 @@ export const games: Prisma.GameCreateInput[] = [
     GameplayYouTubeUrl: 'https://youtu.be/FApX-M_DrDc',
     genres: {
       connect: {
-        id: '5543c313-96ea-42b5-a81c-5f9304288576',
+        id: '9ec43bc9-a963-42c1-b8b9-5e05fd6609ec',
       },
     },
   },

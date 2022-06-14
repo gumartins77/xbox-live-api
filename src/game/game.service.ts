@@ -20,7 +20,7 @@ export class GameService {
         id: true,
         Title: true,
         CoverImageUrl: true,
-      }
+      },
     });
   }
 
@@ -48,27 +48,26 @@ export class GameService {
       TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
       genres: {
-        connect: {
-          id: dto.genreId,
-        },
+        connect: dto.genres.map((genreId) => ({
+          id: genreId,
+        })),
       },
     };
 
     try {
-      return await this.prisma.game
-        .create({
-          data,
-          select: {
-            id: true,
-            Title: true,
-            CoverImageUrl: true,
-            genres: {
-              select: {
-                Name: true,
-              },
+      return await this.prisma.game.create({
+        data,
+        select: {
+          id: true,
+          Title: true,
+          CoverImageUrl: true,
+          genres: {
+            select: {
+              Name: true,
             },
           },
-        });
+        },
+      });
     } catch (error) {
       return handleError(error);
     }
@@ -86,9 +85,9 @@ export class GameService {
       TrailerYouTubeUrl: dto.TrailerYouTubeUrl,
       GameplayYouTubeUrl: dto.GameplayYouTubeUrl,
       genres: {
-        connect: {
-          id: dto.genreId,
-        },
+        connect: dto.genres.map((genreId) => ({
+          id: genreId,
+        })),
       },
     };
 

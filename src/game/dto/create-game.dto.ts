@@ -60,10 +60,10 @@ export class CreateGameDto {
   })
   GameplayYouTubeUrl: string;
 
-  @IsUUID()
+  @IsUUID(undefined, { each: true })
   @ApiProperty({
     description: 'The genre of the game',
-    example: 'dcaff4f1-f984-49c2-a7ec-ccbe8d9d49a7',
+    example: ['dcaff4f1-f984-49c2-a7ec-ccbe8d9d49a7'],
   })
-  genreId: string;
+  genres: string[];
 }
