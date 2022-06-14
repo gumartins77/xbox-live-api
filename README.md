@@ -55,19 +55,20 @@ $ npm run start:prod
 
 `CRUD USERS [AUTH]`: <p>Create a user to be able to use the site, the same will be required to create the profiles.</p>
 
+`AUTH`: <p>Login and authenticate a registered user in the api.</p>
+
 `CRUD PROFILES [AUTH]`: <p>When creating a profile, the user must also relate the profile to the user, and the same user can have several profiles, but a profile can only have one user. In this same profile, the user will be able to create their own list of favorite games and games, with an exclusive homepage for each profile.</p>
+
+`CRUD GENRES [AUTH] [ADMIN]`: <p>Also being only functional to those who are admin, it works in the same way as games crud, being able to add, edit and delete them, the advantage here is that, with the relation with the games, you can filter the games by genre, bringing a list of genres and their related games.</p>
 
 `CRUD GAMES [AUTH] [ADMIN]`: <p>All functional game crud can be performed only by those who have the admin key, which will only be the one selected in the database, but then only the same admin can transform other users into admin.
 In games crud, it is created, where there is a relationship with the genre table, being possible only to create a game with an existing genre in the API. You can also edit the game, view it by id and delete it. For the profile, you have the functionality to add the game to the profile and even favorite it.</p>
-
-`CRUD GENRES [AUTH] [ADMIN]`: <p>Also being only functional to those who are admin, it works in the same way as games crud, being able to add, edit and delete them, the advantage here is that, with the relation with the games, you can filter the games by genre, bringing a list of genres and their related games.</p>
 
 `HOMEPAGE [AUTH] [GET]`: <p>The Homepage is linked to each unique profile, bringing the games added, favorited and by genre, being able to favorite and unfavorite and exclude the games you want from the homepage.</p>
 
 ## Application swagger
 
-- Swagger - [Xbox-Live-Api](http://localhost:3005/api/)
-
+- Swagger - [Xbox-Live-Api](https://xbox-live-api-production.up.railway.app/api/)
 
 ## Support
 
