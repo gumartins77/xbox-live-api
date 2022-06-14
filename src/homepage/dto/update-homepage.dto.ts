@@ -6,7 +6,7 @@ export class UpdateHomepageDto {
   @IsBoolean()
   @ApiProperty({
     description: 'The action of favoriteing or unfavoring a game',
-    example: false
+    example: false,
   })
-  isFavorite?: boolean
+  isFavorite?: boolean;
 }

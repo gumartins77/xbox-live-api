@@ -16,8 +16,8 @@ export class ProfileService {
       select: {
         id: true,
         Title: true,
-        ImageURL: true
-      }
+        ImageURL: true,
+      },
     });
   }
 

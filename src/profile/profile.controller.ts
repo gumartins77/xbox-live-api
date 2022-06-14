@@ -1,23 +1,23 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { ProfileService } from './profile.service';
-import { CreateProfileDto } from './dto/create-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Profile } from './entities/profile.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoggedUser } from 'src/auth/logged-user.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { CreateProfileDto } from './dto/create-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { Profile } from './entities/profile.entity';
+import { ProfileService } from './profile.service';
 
 @ApiTags('profile')
 @UseGuards(AuthGuard())
@@ -30,7 +30,10 @@ export class ProfileController {
   @ApiOperation({
     summary: 'Create a new profile',
   })
-  create(@LoggedUser() user: User, @Body() dto: CreateProfileDto): Promise<Profile> {
+  create(
+    @LoggedUser() user: User,
+    @Body() dto: CreateProfileDto,
+  ): Promise<Profile> {
     return this.profileService.create(user.id, dto);
   }
 

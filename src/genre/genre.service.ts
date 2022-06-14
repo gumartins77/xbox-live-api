@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { handleError } from 'utils/handle-error.util';
 import { CreateGenreDto } from './dto/create-genre.dto';

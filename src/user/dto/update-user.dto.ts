@@ -6,7 +6,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   @IsBoolean()
   @ApiProperty({
-    description: 'Field to identify if the user has application administrator powers'
+    description:
+      'Field to identify if the user has application administrator powers',
   })
   isAdmin?: boolean;
 }

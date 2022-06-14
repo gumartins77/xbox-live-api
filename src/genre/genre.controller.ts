@@ -1,45 +1,45 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { GenreService } from './genre.service';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/user/entities/user.entity';
+import { UserValid } from 'src/user/isAdmin.decorator';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Genre } from './entities/genre.entity';
-import { AuthGuard } from '@nestjs/passport';
-import { UserValid } from 'src/user/isAdmin.decorator';
-import { User } from 'src/user/entities/user.entity';
+import { GenreService } from './genre.service';
 
 @ApiTags('genre')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 @Controller('genre')
 export class GenreController {
-  constructor(private readonly genderService: GenreService) {}
+  constructor(private readonly genreService: GenreService) {}
 
   @Post()
   @ApiOperation({
     summary: 'Create a new genre',
   })
   create(@UserValid() user: User, @Body() dto: CreateGenreDto): Promise<Genre> {
-    return this.genderService.create(dto);
+    return this.genreService.create(dto);
   }
 
   @Get()
   @ApiOperation({
-    summary: 'List all genders',
+    summary: 'List all genres',
   })
   findAll(@UserValid() user: User): Promise<Genre[]> {
-    return this.genderService.findAll();
+    return this.genreService.findAll();
   }
 
   @Get(':id')
@@ -47,7 +47,7 @@ export class GenreController {
     summary: 'List all games by related genre',
   })
   findAllGamesRelation(@UserValid() user: User, @Param('id') id: string) {
-    return this.genderService.findAllGamesRelation(id);
+    return this.genreService.findAllGamesRelation(id);
   }
 
   @Patch(':id')
@@ -59,7 +59,7 @@ export class GenreController {
     @Param('id') id: string,
     @Body() dto: UpdateGenreDto,
   ): Promise<Genre> {
-    return this.genderService.update(id, dto);
+    return this.genreService.update(id, dto);
   }
 
   @Delete(':id')
@@ -68,6 +68,6 @@ export class GenreController {
     summary: 'Remove a genre by Id',
   })
   delete(@UserValid() user: User, @Param('id') id: string) {
-    return this.genderService.delete(id);
+    return this.genreService.delete(id);
   }
 }

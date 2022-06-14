@@ -1,4 +1,8 @@
-import { createParamDecorator, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 export const UserValid = createParamDecorator((_, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
@@ -6,8 +10,10 @@ export const UserValid = createParamDecorator((_, ctx: ExecutionContext) => {
 
   delete user.password;
 
-  if(user.isAdmin != true) {
-    throw new UnauthorizedException('User does not have permission to access this route!')
+  if (user.isAdmin != true) {
+    throw new UnauthorizedException(
+      'User does not have permission to access this route!',
+    );
   }
 
   return user;

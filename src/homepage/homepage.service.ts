@@ -12,29 +12,29 @@ export class HomepageService {
   async findAll(id: string) {
     const allGames = await this.prisma.homepage.findMany({
       orderBy: {
-        isFavorite: "desc",
+        isFavorite: 'desc',
       },
       where: { profileId: id },
       select: {
         id: true,
         isFavorite: true,
-        game: true
+        game: true,
       },
     });
 
-    const allGenders = await this.prisma.genre.findMany({
+    const allGenres = await this.prisma.genre.findMany({
       select: {
         Name: true,
         games: {
           select: {
             Title: true,
-            CoverImageUrl: true
-          }
-        }
-      }
-    })
+            CoverImageUrl: true,
+          },
+        },
+      },
+    });
 
-    return ({allGames, allGenders});
+    return { allGames, allGenres };
   }
 
   async findById(id: string) {
@@ -63,25 +63,24 @@ export class HomepageService {
     };
 
     try {
-      return await this.prisma.homepage
-        .create({
-          data,
-          select: {
-            id: true,
-            game: {
-              select: {
-                Title: true,
-                CoverImageUrl: true,
-              },
+      return await this.prisma.homepage.create({
+        data,
+        select: {
+          id: true,
+          game: {
+            select: {
+              Title: true,
+              CoverImageUrl: true,
             },
-            profile: {
-              select: {
-                Title: true,
-              },
-            },
-            isFavorite: true,
           },
-        });
+          profile: {
+            select: {
+              Title: true,
+            },
+          },
+          isFavorite: true,
+        },
+      });
     } catch (error) {
       return handleError(error);
     }

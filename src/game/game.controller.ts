@@ -8,7 +8,7 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -37,7 +37,7 @@ export class GameController {
   @ApiOperation({
     summary: 'List all games',
   })
-  findAll(@UserValid() user: User) {
+  findAll() {
     return this.gameService.findAll();
   }
 
@@ -45,7 +45,7 @@ export class GameController {
   @ApiOperation({
     summary: 'View a game by Id',
   })
-  findOne(@UserValid() user: User, @Param('id') id: string) {
+  findOne(@Param('id') id: string) {
     return this.gameService.findOne(id);
   }
 
@@ -53,7 +53,11 @@ export class GameController {
   @ApiOperation({
     summary: 'Edit a game by Id',
   })
-  update(@UserValid() user: User, @Param('id') id: string, @Body() dto: UpdateGameDto) {
+  update(
+    @UserValid() user: User,
+    @Param('id') id: string,
+    @Body() dto: UpdateGameDto,
+  ) {
     return this.gameService.update(id, dto);
   }
 

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { GenreService } from './genre.service';
-import { GenreController } from './genre.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
 import { PassportModule } from '@nestjs/passport';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { GenreController } from './genre.controller';
+import { GenreService } from './genre.service';
 
 @Module({
-  imports: [PrismaModule, PassportModule.register({ defaultStrategy: 'jwt' }),],
+  imports: [PrismaModule, PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [GenreController],
   providers: [GenreService],
 })

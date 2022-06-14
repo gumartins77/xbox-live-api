@@ -6,8 +6,8 @@ export const users: Prisma.UserCreateInput[] = [
     Name: 'Gustavo Martins',
     Email: 'gugumartin77@gmail.com',
     Password: 'Xbox@1234',
-    CPF: '123.456.789-10'
-  }
+    CPF: '123.456.789-10',
+  },
 ];
 
 export const user = async (prisma: PrismaClient) => {

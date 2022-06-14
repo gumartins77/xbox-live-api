@@ -1,22 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AuthGuard } from '@nestjs/passport';
 import { UserValid } from './isAdmin.decorator';
+import { UserService } from './user.service';
 
 @ApiTags('user')
 @Controller('user')

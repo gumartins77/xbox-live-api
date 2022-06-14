@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { handleError } from 'utils/handle-error.util';
@@ -48,7 +45,7 @@ export class UserService {
   async create(dto: CreateUserDto): Promise<User> {
     const data: User = {
       ...dto,
-      Password: await bcrypt.hash(dto.Password, 10)
+      Password: await bcrypt.hash(dto.Password, 10),
     };
 
     if (!data.isAdmin) {
